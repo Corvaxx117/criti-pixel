@@ -17,6 +17,12 @@ final class UserFixtures extends Fixture
             ->setUsername(sprintf('user+%d', $index))
         );
 
+        // Utilisateur dédié aux tests fonctionnels (sans review)
+        $users[] = (new User())
+            ->setEmail('testeur@critipixel.fr')
+            ->setPlainPassword('password')
+            ->setUsername('testeur');
+
         array_walk($users, [$manager, 'persist']);
 
         $manager->flush();
