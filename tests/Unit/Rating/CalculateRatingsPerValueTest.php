@@ -21,6 +21,8 @@ class CalculateRatingsPerValueTest extends TestCase
 
     /**
      * @dataProvider ratesProvider
+     * @param VideoGame $videoGame
+     * @param array<int, int> $expectedValues
      */
     public function testRatingPerValueCalculation(VideoGame $videoGame, array $expectedValues): void
     {
@@ -34,6 +36,11 @@ class CalculateRatingsPerValueTest extends TestCase
         $this->assertSame($expectedValues[5], $numberOfRatingsPerValue->getNumberOfFive());    
     }
 
+    /**
+     * Fournit des cas de test pour la méthode testRatingPerValueCalculation.
+     *
+     * @return iterable<string, array{videoGame: VideoGame, ExpectedValues: array<int, int>}>
+     */
     public static function ratesProvider(): iterable
     {
         $rates = [
@@ -69,6 +76,12 @@ class CalculateRatingsPerValueTest extends TestCase
         ];
     }
 
+    /**
+     * Crée un objet VideoGame avec des reviews ayant les notes spécifiées.
+     *
+     * @param array<int> $ratings
+     * @return VideoGame
+     */
     private static function createVideoGameWithRatings(array $ratings): VideoGame
     {
         $videoGame = (new VideoGame())

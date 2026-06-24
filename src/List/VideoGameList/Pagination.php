@@ -67,7 +67,7 @@ final class Pagination implements IteratorAggregate, Countable
     }
 
     /**
-     * @return Traversable<string, int>
+     * @return Traversable<mixed, Page>
      */
     public function getIterator(): Traversable
     {
@@ -102,11 +102,17 @@ final class Pagination implements IteratorAggregate, Countable
         return $this->limit;
     }
 
+    /**
+     * @return Direction[]
+     */
     public function getDirections(): array
     {
         return Direction::cases();
     }
 
+    /**
+     * @return Sorting[]
+     */
     public function getAllSorting(): array
     {
         return Sorting::cases();
@@ -137,6 +143,6 @@ final class Pagination implements IteratorAggregate, Countable
 
     public function count(): int
     {
-        return $this->getLastPage();
+        return max(0, $this->getLastPage());
     }
 }

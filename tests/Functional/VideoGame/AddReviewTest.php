@@ -27,6 +27,7 @@ final class AddReviewTest extends FunctionalTestCase
         $reviewCountAfter = count($crawler->filter('#pane-reviews .list-group .list-group-item'));
 
         $this->assertSame($reviewCountBefore + 1, $reviewCountAfter);
+        // TODO : Utiliser des selecteurs plus précis pour éviter de sélectionner la note et le commentaire d'une autre review que celle que nous venons d'ajouter
         $this->assertSelectorTextContains('.value', '5');
         $this->assertAnySelectorTextContains('p', 'Excellent jeu !');
     }

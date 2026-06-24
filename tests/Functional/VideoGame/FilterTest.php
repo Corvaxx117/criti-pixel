@@ -15,12 +15,15 @@ final class FilterTest extends FunctionalTestCase
      */
     public function testFilterByTags(array $tagNames, int $expectedCount): void
     {
-        $this->get('/');
+        // TO DO : Autre approche plus cohérente :
+        // page d'accueil, simuler clic sur les tags, submit du formulaire de filtrage, asserter le nombre de résultats
+
         // 1. Récupérer les ids des tags par leur nom
         $em = $this->getEntityManager();
         $tagIds = [];
         foreach ($tagNames as $name) {
             $tag = $em->getRepository(Tag::class)->findOneBy(['name' => $name]);
+            assert($tag !== null);
             $tagIds[] = $tag->getId();
         }
         // 2. transforme un tableau d'ids PHP en query string HTTP valide

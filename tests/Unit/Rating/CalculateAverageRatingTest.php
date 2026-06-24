@@ -21,6 +21,8 @@ class CalculateAverageRatingTest extends TestCase
 
     /**
      * @dataProvider ratesProvider
+     * @param array<int> $rates
+     * @param int|null $averageValue
      */
     public function testAverageCalculation(array $rates, ?int $averageValue): void
     {
@@ -31,6 +33,11 @@ class CalculateAverageRatingTest extends TestCase
         $this->assertSame($averageValue, $videoGame->getAverageRating());
     }
 
+    /**
+     * Fournit des cas de test pour la méthode testAverageCalculation.
+     *
+     * @return iterable<string, array{rates: array<int>, averageValue: int|null}>
+     */
     public static function ratesProvider(): iterable
     {
         // Cas nominal : plusieurs notes variées, somme=12, count=3, moyenne=4.0, ceil=4
@@ -82,6 +89,12 @@ class CalculateAverageRatingTest extends TestCase
         ];
     }
 
+    /**
+     * Crée un objet VideoGame avec des reviews ayant les notes spécifiées.
+     *
+     * @param array<int> $ratings
+     * @return VideoGame
+     */
     private function createVideoGameWithRatings(array $ratings): VideoGame
     {
         $videoGame = (new VideoGame())

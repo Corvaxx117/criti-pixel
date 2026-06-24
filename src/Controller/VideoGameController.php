@@ -8,6 +8,7 @@ use App\Form\ReviewType;
 use App\List\ListFactory;
 use App\List\VideoGameList\Pagination;
 use App\Model\Entity\Review;
+use App\Model\Entity\User;
 use App\Model\Entity\VideoGame;
 use App\Rating\RatingHandler;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,7 +47,9 @@ final class VideoGameController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->denyAccessUnlessGranted('review', $videoGame);
             $review->setVideoGame($videoGame);
-            $review->setUser($this->getUser());
+            /** @var User $user */
+            $user = $this->getUser();
+            $review->setUser($user);
             $entityManager->persist($review);
             $ratingHandler->countRatingsPerValue($videoGame);
             $ratingHandler->calculateAverage($videoGame);

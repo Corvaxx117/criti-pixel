@@ -11,6 +11,7 @@ final class NavigationTest extends FunctionalTestCase
     */
     public function testNavigationLinks(string $linkText, string $expectedSelector, ?string $expectedText = null): void
     {
+        // Ajouter donc un contexte d'authentification
         $crawler = $this->get('/');
         $link = $crawler->selectLink($linkText)->link();
         $this->client->click($link);
@@ -40,6 +41,11 @@ final class NavigationTest extends FunctionalTestCase
             'expectedSelector' => 'form[name="sorting"]',
             'expectedText' => null
         ];
+        // Tester : bouton s'inscrire / se connecter absent si connecté
+        // Tester : bouton de déconnexion présent si connecté
+        // construire un fake user pour tester ces cas 
+        // Soit une méthode de test dédiée a chaque scenario, soit unifier avec un dataprovider + methode de test
+        // TestNavigationLinksWhenAuthenticated et TestNavigationLinksWhenNotAuthenticated
     }
 
     public function testClickOnGameFromListGoesToDetailPage(): void

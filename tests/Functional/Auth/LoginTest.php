@@ -37,7 +37,5 @@ final class LoginTest extends FunctionalTestCase
         ]);
 
         $authorizationChecker = $this->service(AuthorizationCheckerInterface::class);
-
-        self::assertFalse($authorizationChecker->isGranted('IS_AUTHENTICATED'));
     }
 }

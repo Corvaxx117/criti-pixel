@@ -12,12 +12,10 @@ use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Generator;
 
 final class VideoGameFixtures extends Fixture implements DependentFixtureInterface
 {
     public function __construct(
-        private readonly Generator $faker,
         private readonly CalculateAverageRating $calculateAverageRating,
         private readonly CountRatingsPerValue $countRatingsPerValue
     ) {}
@@ -280,10 +278,10 @@ final class VideoGameFixtures extends Fixture implements DependentFixtureInterfa
 
         foreach ($videoGames as $videoGame) {
             // Chaque jeu reçoit entre 3 et 8 reviews
-            $numReviews = random_int(3, min(8, count($users)));
-            $reviewers = (array) array_rand(array_flip(array_map(fn($u) => array_search($u, $users), $users)), $numReviews);
+            $numReviews = random_int(3, max(3, min(8, count($users))));
+            $reviewerIndices = (array) array_rand($users, $numReviews);
 
-            foreach ($reviewers as $userIndex) {
+            foreach ($reviewerIndices as $userIndex) {
                 // Pondération des notes selon la note éditoriale
                 $baseRating = $videoGame->getRating();
                 $deviation = random_int(-1, 1);
