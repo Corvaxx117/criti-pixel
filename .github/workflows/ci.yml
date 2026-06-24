@@ -18,7 +18,9 @@ jobs:
           extensions: mbstring, intl, pdo_sqlite, xdebug
           coverage: none
       - name: Install dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist
+        run: composer install --no-progress --no-suggest --no-scripts --prefer-dist
+      - name: Symfony Cache warmup
+        run: php bin/console c:c --env=test && php bin/console c:w --env=test
       - name: Create test database
         run: php bin/console doctrine:schema:create --env=test
       - name: Load fixtures
