@@ -27,9 +27,10 @@ final class AddReviewTest extends FunctionalTestCase
         $reviewCountAfter = count($crawler->filter('#pane-reviews .list-group .list-group-item'));
 
         $this->assertSame($reviewCountBefore + 1, $reviewCountAfter);
-        // TODO : Utiliser des selecteurs plus précis pour éviter de sélectionner la note et le commentaire d'une autre review que celle que nous venons d'ajouter
-        $this->assertSelectorTextContains('.value', '5');
-        $this->assertAnySelectorTextContains('p', 'Excellent jeu !');
+        // 6. Vérifier que la nouvelle review est ajoutée par l'utilisateur "testeur" et affichée avec les bonnes informations
+        $newReview = $crawler->filter('#pane-reviews .list-group-item:contains("testeur")');
+        $this->assertSame('5', $newReview->filter('.value')->text());
+        $this->assertStringContainsString('Excellent jeu !', $newReview->filter('p')->text());
     }
 
     public function testCannotCreateReviewWhenNotAuthenticated(): void
