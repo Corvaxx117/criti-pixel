@@ -276,10 +276,13 @@ final class VideoGameFixtures extends Fixture implements DependentFixtureInterfa
             ],
         ];
 
+        // Exclure le testeur du pool de reviewers
+        $reviewers = array_values(array_filter($users, fn(User $u) => $u->getEmail() !== 'testeur@critipixel.fr'));
+
         foreach ($videoGames as $videoGame) {
             // Chaque jeu reçoit entre 3 et 8 reviews
-            $numReviews = random_int(3, max(3, min(8, count($users))));
-            $reviewerIndices = (array) array_rand($users, $numReviews);
+            $numReviews = random_int(3, max(3, min(8, count($reviewers))));
+            $reviewerIndices = (array) array_rand($reviewers, $numReviews);
 
             foreach ($reviewerIndices as $userIndex) {
                 // Pondération des notes selon la note éditoriale
@@ -292,7 +295,7 @@ final class VideoGameFixtures extends Fixture implements DependentFixtureInterfa
 
                 $review = (new Review())
                     ->setVideoGame($videoGame)
-                    ->setUser($users[$userIndex])
+                    ->setUser($reviewers[$userIndex])
                     ->setRating($userRating)
                     ->setComment($comment);
 
