@@ -38,7 +38,7 @@ final class FilterTest extends FunctionalTestCase
     {
         yield 'aucun tag' => [
             [],
-             10
+            10
         ];
         yield 'un tag RPG' => [
             ['RPG'],

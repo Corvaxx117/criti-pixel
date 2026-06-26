@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\VideoGame;
 
+use App\Model\Entity\VideoGame;
 use App\Tests\Functional\FunctionalTestCase;
-use Symfony\Component\HttpFoundation\Response;
 
 final class ShowTest extends FunctionalTestCase
 {
     public function testShouldShowVideoGame(): void
     {
-        $this->get('/jeu-video-0');
+        $videoGame = $this->getEntityManager()->getRepository(VideoGame::class)->findOneBy([]);
+        assert($videoGame !== null);
+        $this->get('/' . $videoGame->getSlug());
         self::assertResponseIsSuccessful();
-        self::assertSelectorTextContains('h1', 'Jeu vidéo 0');
+        $this->assertSelectorTextContains('h1', $videoGame->getTitle());
     }
 }
