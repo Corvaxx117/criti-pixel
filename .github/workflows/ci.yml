@@ -26,6 +26,8 @@ jobs:
         run: php bin/console c:c --env=test && php bin/console c:w --env=test
       - name: Load fixtures
         run: php bin/console doctrine:fixtures:load --env=test --no-interaction
+      - name: Build assets
+        run: php bin/console sass:build
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse --memory-limit=512M
       - name: Run tests
